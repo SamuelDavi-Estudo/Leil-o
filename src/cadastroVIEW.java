@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -141,15 +144,44 @@ public class cadastroVIEW extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         ProdutosDTO produto = new ProdutosDTO();
+        ProdutosDAO DAO = new ProdutosDAO();
+        boolean status;
+        int resposta;
+        
+        
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
-        String status = "A Venda";
+        String status1 = "A Venda";
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
+        produto.setStatus(status1);
+        
+        DAO = new ProdutosDAO();
+        status = DAO.conectar();
+        
+        if(status == false){
+            JOptionPane.showMessageDialog(null, "Erro na conexão do banco de dados");
+        } else {
+            resposta = DAO.cadastrarProduto(produto);
+            
+            if(resposta == 1){
+                JOptionPane.showMessageDialog(null, "Produto cadatrado com sucesso! ");
+                
+                cadastroNome.setText("");
+                cadastroValor.setText("");
 
-        ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
+            }  else if (resposta == 1062) {
+                JOptionPane.showMessageDialog(null, "Este produto ja foi cadastrado. ");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar os dados. ");
+            }
+            DAO.desconectar();
+        }
+        
+        
+
+
+
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
