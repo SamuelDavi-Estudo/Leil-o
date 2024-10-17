@@ -47,9 +47,10 @@ public class ProdutosDAO {
 
         int status;
         try {
-            st = conn.prepareStatement("INSERT into produtos (nome, valor)VALUES (?,?)");
-            st.setString(1, produto.getNome());
+            st = conn.prepareStatement("INSERT into produtos (nome, valor, status)VALUES (?,?,?)");
+            st.setString(1, produto.getNome()); 
             st.setInt(2, produto.getValor());
+            st.setString(3, produto.getStatus1());
             status = st.executeUpdate();
             return status;
         } catch (SQLException ex) {
@@ -71,7 +72,7 @@ public class ProdutosDAO {
                 produto.setId(rs.getInt("id"));
                 produto.setNome(rs.getString("nome"));
                 produto.setValor(rs.getInt("valor"));
-                produto.setStatus(rs.getString("status"));
+                produto.setStatus1(rs.getString("status"));
                 listaProdutos.add(produto);
 
             }

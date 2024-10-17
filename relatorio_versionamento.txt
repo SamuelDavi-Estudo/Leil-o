@@ -1,0 +1,5 @@
+5254af4 Funcionalidade de listagem de itens cadastrados implementada
+5e764a7 Funcionalidade de salvar item no banco de dados implementada
+af7c351 Definir cadastroVIEW como a tela principal
+8d8286c Create README.md
+e1b02bd leilao

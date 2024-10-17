@@ -217,7 +217,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                     listagem.get(i).getId(),
                     listagem.get(i).getNome(),
                     listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
+                    listagem.get(i).getStatus1()
                 });
             } 
         } catch (Exception e) {
@@ -238,7 +238,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                     produto.getId(),
                     produto.getNome(),
                     produto.getValor(),
-                    produto.getStatus()
+                    produto.getStatus1()
                 });
             }
             DAO.desconectar();
