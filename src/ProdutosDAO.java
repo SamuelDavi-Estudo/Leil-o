@@ -60,6 +60,17 @@ public class ProdutosDAO {
         }
 
     }
+    
+    public void venderProdutor(int id){
+        try {
+            String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+            st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
+        }
+    }F
 
     public ArrayList<ProdutosDTO> listarProdutos() {
 
