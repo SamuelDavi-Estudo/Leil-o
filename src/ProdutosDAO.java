@@ -48,7 +48,7 @@ public class ProdutosDAO {
         int status;
         try {
             st = conn.prepareStatement("INSERT into produtos (nome, valor, status)VALUES (?,?,?)");
-            st.setString(1, produto.getNome()); 
+            st.setString(1, produto.getNome());
             st.setInt(2, produto.getValor());
             st.setString(3, produto.getStatus1());
             status = st.executeUpdate();
@@ -60,17 +60,17 @@ public class ProdutosDAO {
         }
 
     }
-    
-    public void venderProdutor(int id){
+
+    public void venderProduto(int id) {
         try {
             String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
             st = conn.prepareStatement(sql);
             st.setInt(1, id);
             st.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
         }
-    }F
+    }
 
     public ArrayList<ProdutosDTO> listarProdutos() {
 
@@ -92,6 +92,27 @@ public class ProdutosDAO {
         }
         return listaProdutos;
 
+    }
+
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM produtos WHERE status = 'vendido'";
+            st = conn.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getInt("valor"));
+                produto.setStatus1(rs.getString("status"));
+                produtosVendidos.add(produto);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar produtos vendidos: " + e.getMessage());
+        }
+        return produtosVendidos;
     }
 
 }
