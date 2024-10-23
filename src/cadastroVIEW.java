@@ -196,7 +196,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
     public static void main(String args[]) {
 
         cadastroVIEW cadastroView = new cadastroVIEW();
-        cadastroView.setVisible(true);
+        
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
