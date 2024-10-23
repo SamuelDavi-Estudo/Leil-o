@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Adm
@@ -139,16 +138,29 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         String id = id_produto_venda.getText();
+        int idFormatado = Integer.parseInt(id);
         
-        ProdutosDAO produtosdao = new ProdutosDAO();
+        boolean status;
         
-        produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        
+        ProdutosDAO dao = new ProdutosDAO();
+        
+        status = dao.conectar();
+        
+        if(status == false){
+            JOptionPane.showMessageDialog(null, "Erro na conexão do banco de dados");
+        } else {
+           dao.venderProduto(idFormatado);
+        }
+        
+        atualizarTabela();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        vendasVIEW vendas = new vendasVIEW(); 
+        vendasVIEW vendas = new vendasVIEW();
         vendas.setVisible(true);
+        
+        
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -203,32 +215,32 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
+    private void listarProdutos() {
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
-                
+
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
-            
+
             ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
+
+            for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
                     listagem.get(i).getId(),
                     listagem.get(i).getNome(),
                     listagem.get(i).getValor(),
                     listagem.get(i).getStatus1()
                 });
-            } 
+            }
         } catch (Exception e) {
         }
-    
+
     }
-    
+
     public void atualizarTabela() {
         ProdutosDAO DAO = new ProdutosDAO();
         boolean status = DAO.conectar();
-        
+
         if (status) {
             ArrayList<ProdutosDTO> listaProdutos = DAO.listarProdutos();
             DefaultTableModel model = (DefaultTableModel) this.listaProdutos.getModel();
